@@ -1,0 +1,10 @@
+{
+  "PORT": 3010,
+  "DatabaseAddress": "mongodb://127.0.0.1:27017/test",
+  "jwtPrivateKey": "Payman3127",
+  "LiaraBucketName": "atlas",
+  "LiaraAccessKey": "h81evmae92g5opmk",
+  "LiaraSecretKey": "f816f4c6-f387-4cd5-b2b8-cdfc212ff151",
+  "LiaraEndpointUrl": "https://storage.iran.liara.space"
+}
+
