@@ -68,6 +68,15 @@ class KhaniController {
         }
     }
 
+     async RenderQuestionnairesTable(req, res) {
+    try {
+      const questionnaires = await QuestionnaireModel.find().lean();
+      return res.render('questionnaires', { questionnaires });
+    } catch (err) {
+      await addErrorLog(req, res, err, 0);
+    }
+  }
+
 }
 
 module.exports = new KhaniController
