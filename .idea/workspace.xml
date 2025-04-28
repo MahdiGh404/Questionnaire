@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b5da56e-6769-4c6a-b37c-9aac030ab326" name="Changes" comment="add table 2">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/Questionnaire.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/Questionnaire.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/questionnaires.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/questionnaires.ejs" afterDir="false" />
-    </list>
+    <list default="true" id="2b5da56e-6769-4c6a-b37c-9aac030ab326" name="Changes" comment="add table 3" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -111,7 +107,7 @@
       <workItem from="1745823034485" duration="23000" />
       <workItem from="1745823356034" duration="114000" />
       <workItem from="1745823759235" duration="1805000" />
-      <workItem from="1745827908220" duration="9163000" />
+      <workItem from="1745827908220" duration="9981000" />
     </task>
     <task id="LOCAL-00001" summary="config">
       <option name="closed" value="true" />
@@ -185,7 +181,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745830292976</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="add table 3">
+      <option name="closed" value="true" />
+      <created>1745843615578</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1745843615578</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -199,6 +203,7 @@
     <MESSAGE value="config" />
     <MESSAGE value="add table 1" />
     <MESSAGE value="add table 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="add table 2" />
+    <MESSAGE value="add table 3" />
+    <option name="LAST_COMMIT_MESSAGE" value="add table 3" />
   </component>
 </project>
