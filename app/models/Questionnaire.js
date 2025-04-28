@@ -495,6 +495,7 @@ const DetailedQuestionnaireSchema = new Schema({
 
     // --- Optional Metadata ---
     sourceQuestionnaireId: String,
+    briefDescription: String,
     metadata: {
         entryDate: Date,
         enteredBy: String,

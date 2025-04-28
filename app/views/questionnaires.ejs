@@ -1,391 +1,532 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>سامانه پرسشنامه‌های محلات</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سامانه پرسشنامه‌های محلات</title>
 
-  <!-- Bootstrap RTL -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css">
+    <!-- Bootstrap RTL -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css">
 
-  <!-- DataTables + Bootstrap 5 -->
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
+    <!-- DataTables + Bootstrap 5 -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-  <!-- Persian Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Persian Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-  <style>
-    :root {
-      --primary-color: #3949ab;
-      --primary-light: #e8eaf6;
-      --secondary-color: #ff6e40;
-      --success-color: #4caf50;
-      --danger-color: #f44336;
-      --warning-color: #ff9800;
-      --info-color: #00bcd4;
-      --dark-color: #263238;
-      --light-color: #f5f5f5;
-      --gray-color: #607d8b;
-    }
+    <style>
+        :root {
+            --primary-color: #3949ab;
+            --primary-light: #e8eaf6;
+            --secondary-color: #ff6e40;
+            --success-color: #4caf50;
+            --danger-color: #f44336;
+            --warning-color: #ff9800;
+            --info-color: #00bcd4;
+            --dark-color: #263238;
+            --light-color: #f5f5f5;
+            --gray-color: #607d8b;
+        }
 
-    body {
-      font-family: 'Vazirmatn', Tahoma, sans-serif;
-      background: #f8f9fa;
-      line-height: 1.6;
-      color: #333;
-    }
+        body {
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            background: #fafafa;
+            line-height: 1.6;
+            color: #333;
+        }
 
-    .main-header {
-      background: var(--primary-color);
-      color: white;
-      padding: 1rem 0;
-      margin-bottom: 2rem;
-      border-radius: 0 0 1rem 1rem;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
+        .main-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0 0 1rem 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-    .accordion-button:not(.collapsed) {
-      background-color: var(--primary-light);
-      color: var(--primary-color);
-      box-shadow: none;
-      font-weight: 500;
-    }
+        /* Sticky quick–nav inside each questionnaire */
+        .sticky-nav {
+            top: 1rem;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
 
-    .accordion-button:focus {
-      box-shadow: none;
-      border-color: var(--primary-light);
-    }
+        .section-title {
+            font-weight: 600;
+            margin-bottom: .75rem;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: .25rem;
+            color: var(--primary-color);
+        }
 
-    .accordion-item {
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
+        .lvl-0 {
+            font-weight: 500;
+            color: var(--dark-color);
+        }
 
-    .accordion-item:hover {
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
+        .lvl-1 {
+            padding-right: 1.25rem;
+            border-right: 3px solid var(--primary-color);
+        }
 
-    .table-container {
-      position: relative;
-      overflow-x: auto;
-    }
+        .lvl-2 {
+            padding-right: 2.5rem;
+            border-right: 3px solid var(--secondary-color);
+        }
 
-    th, td {
-      vertical-align: middle;
-      padding: 0.5rem;
-      font-size: 0.9rem;
-    }
+        .lvl-3 {
+            padding-right: 3.75rem;
+            border-right: 3px solid var(--info-color);
+        }
 
-    .search-container {
-      position: relative;
-      margin-bottom: 1.5rem;
-    }
+        .lvl-4 {
+            padding-right: 5rem;
+            border-right: 3px solid var(--warning-color);
+        }
 
-    .search-container i {
-      position: absolute;
-      left: 10px;
-      top: 10px;
-      color: var(--gray-color);
-    }
+        .icon-field {
+            width: 1rem;
+            text-align: center;
+            margin-left: 0.35rem;
+            color: var(--primary-color);
+        }
 
-    .table-search {
-      padding-left: 2rem;
-      border-radius: 2rem;
-      border: 1px solid #ced4da;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
+        .badge-success {
+            background-color: var(--success-color) !important;
+        }
 
-    .table-search:focus {
-      box-shadow: 0 0 0 0.25rem rgba(57, 73, 171, 0.25);
-      border-color: var(--primary-color);
-    }
+        .badge-danger {
+            background-color: var(--danger-color) !important;
+        }
 
-    .lvl-0 { font-weight: 500; color: var(--dark-color); }
-    .lvl-1 { padding-right: 1.5rem; background: #fdfdfd; border-right: 3px solid var(--primary-color); }
-    .lvl-2 { padding-right: 3rem; background: #fafafa; border-right: 3px solid var(--secondary-color); }
-    .lvl-3 { padding-right: 4.5rem; background: #f7f7f7; border-right: 3px solid var(--info-color); }
-    .lvl-4 { padding-right: 6rem; background: #f4f4f4; border-right: 3px solid var(--warning-color); }
-
-    .section-row {
-      background: var(--primary-light);
-      font-weight: 600;
-      color: var(--primary-color);
-      transition: all 0.2s ease;
-    }
-
-    .section-row:hover { background: #d1d9ff; }
-    .array-item-title { background: #f0f4ff; font-weight: 500; color: var(--primary-color); }
-    .nested-table { margin: 0; width: 100%; background: #fff; }
-
-    div.dataTables_wrapper div.dataTables_filter { display: none; }
-
-    @media (max-width: 768px) {
-      .lvl-1, .lvl-2, .lvl-3, .lvl-4 { padding-right: 0.5rem; }
-      .lvl-1::before { content: "↳ "; color: var(--primary-color); }
-      .lvl-2::before { content: "↳↳ "; color: var(--secondary-color); }
-      .lvl-3::before { content: "↳↳↳ "; color: var(--info-color); }
-      .lvl-4::before { content: "↳↳↳↳ "; color: var(--warning-color); }
-    }
-
-    .icon-field {
-      width: 1rem;
-      text-align: center;
-      margin-left: 0.5rem;
-      color: var(--primary-color);
-    }
-
-    .stats-card {
-      border-radius: 0.5rem;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      background: white;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-      transition: all 0.3s ease;
-    }
-
-    .stats-card:hover {
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      transform: translateY(-2px);
-    }
-
-    .stats-card-title { font-size: 0.9rem; color: var(--gray-color); margin-bottom: 0.5rem; }
-    .stats-card-value { font-size: 1.5rem; font-weight: 500; color: var(--dark-color); }
-  </style>
+        table.nested-table thead {
+            background: var(--primary-light);
+        }
+    </style>
 </head>
-
 <body>
 <header class="main-header">
-  <div class="container">
-    <h1 class="h2 mb-0 text-center">سامانه اطلاعات محلات</h1>
-    <p class="mb-0 text-center text-white-50">نمایش جامع اطلاعات پرسشنامه‌های محلات</p>
-  </div>
+    <div class="container text-center">
+        <h1 class="h3 mb-0">سامانه اطلاعات پرسشنامه‌های محلات</h1>
+        <small class="text-white-50">نمایش جامع و ساختارمند کلیه داده‌های ثبت‌شده</small>
+    </div>
 </header>
 
 <div class="container">
-  <div class="row mb-4">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-3 col-sm-6 mb-3">
-              <div class="stats-card">
-                <div class="stats-card-title">تعداد پرسشنامه‌ها</div>
-                <div class="stats-card-value"><%= questionnaires.length %></div>
-              </div>
+    <!-- stats cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="bg-white shadow-sm rounded-3 p-3 text-center">
+                <div class="text-muted small">تعداد پرسشنامه‌ها</div>
+                <div class="fs-4 fw-semibold"><%= questionnaires.length %></div>
             </div>
-            <div class="col-md-3 col-sm-6 mb-3">
-              <div class="stats-card">
-                <div class="stats-card-title">تعداد استان‌ها</div>
-                <div class="stats-card-value"><%= [...new Set(questionnaires.map(q => q.generalInfo?.province))].filter(Boolean).length %></div>
-              </div>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-3">
-              <div class="stats-card">
-                <div class="stats-card-title">تعداد شهرها</div>
-                <div class="stats-card-value"><%= [...new Set(questionnaires.map(q => q.generalInfo?.city))].filter(Boolean).length %></div>
-              </div>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-3">
-              <div class="stats-card">
-                <div class="stats-card-title">محلات ثبت‌شده</div>
-                <div class="stats-card-value"><%= [...new Set(questionnaires.map(q => q.generalInfo?.neighborhood))].filter(Boolean).length %></div>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
+        <div class="col-6 col-md-3">
+            <div class="bg-white shadow-sm rounded-3 p-3 text-center">
+                <div class="text-muted small">استان‌ها</div>
+                <div class="fs-4 fw-semibold"><%= [...new Set(questionnaires.map(q => q?.generalInfo?.province))].filter(Boolean).length %></div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="bg-white shadow-sm rounded-3 p-3 text-center">
+                <div class="text-muted small">شهرها</div>
+                <div class="fs-4 fw-semibold"><%= [...new Set(questionnaires.map(q => q?.generalInfo?.city))].filter(Boolean).length %></div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="bg-white shadow-sm rounded-3 p-3 text-center">
+                <div class="text-muted small">محلات</div>
+                <div class="fs-4 fw-semibold"><%= [...new Set(questionnaires.map(q => q?.generalInfo?.neighborhood))].filter(Boolean).length %></div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div class="accordion" id="accordionQuestionnaires">
+    <!-- helpers for translation & icons -->
     <% const icons = {
-      'generalInfo': 'fas fa-info-circle',
-      'q3_population_structured': 'fas fa-users',
-      'q4_religion': 'fas fa-pray',
-      'q5_ethnicities_list': 'fas fa-globe',
-      'q10_facilities': 'fas fa-building',
-      'q14_needyInfo': 'fas fa-hand-holding-heart',
-      'q15_securityInfo': 'fas fa-shield-alt',
-      'q16_addictionInfo': 'fas fa-pills',
-      'q17_religiousCulturalInfo': 'fas fa-mosque'
+        generalInfo: 'fas fa-info-circle',
+        q3_population_structured: 'fas fa-users',
+        q4_religion: 'fas fa-pray',
+        q5_ethnicities_list: 'fas fa-globe',
+        q10_facilities: 'fas fa-building',
+        q14_needyInfo: 'fas fa-hand-holding-heart',
+        q15_securityInfo: 'fas fa-shield-alt',
+        q16_addictionInfo: 'fas fa-pills',
+        q17_religiousCulturalInfo: 'fas fa-mosque',
+        socialHarms: 'fas fa-exclamation-triangle'
     }; %>
 
-    <% const dict = {
-      _id:'شناسه', createdAt:'تاریخ ایجاد', updatedAt:'به‌روزرسانی', __v:'نسخه',
-      sourceQuestionnaireId:'شناسهٔ منبع', metadata:'اطلاعات متادیتا',
-      entryDate:'تاریخ ورود', enteredBy:'واردکننده',
-      generalInfo:'اطلاعات کلی', neighborhood:'محله', basijResistanceBase:'پایگاه بسیج',
-      city:'شهر', county:'شهرستان', province:'استان',
-      q1_aerialMapProvided:'نقشهٔ هوایی', q2_neighborhoodDetails:'جزئیات محله',
-      oldName:'نام قدیمی', newName:'نام جدید', detail:'توضیحات',
-      q3_population_structured:'جمعیت و آمار', totalPopulation:'جمعیت کل',
-      residentHouseholds:'خانوارهای مقیم', iranian:'ایرانی', foreign:'اتباع',
-      populationBreakdown:'ترکیب جمعیت', iranianMen:'مردان ایرانی', iranianWomen:'زنان ایرانی',
-      foreignNationals:'اتباع خارجی', minorities:'اقلیت‌ها', ageBreakdown:'تفکیک سنی',
-      group:'گروه', female:'زن', male:'مرد',
-      q4_religion:'اطلاعات مذهبی', distribution:'ترکیب مذهبی', religion:'مذهب',
-      percentage:'درصد/تعداد', deviantSectsInfo_structured:'فرقه‌های انحرافی (جزئی)',
-      sectName:'نام فرقه', secNumber:'تعداد پیروان', secInfo:'توضیحات',
-      deviantSectsInfo_text:'متن فرقه‌های انحرافی',
-      q5_ethnicities_list:'قومیت‌ها', ethnicity:'قومیت', householdCount:'تعداد خانوار',
-      q6_locationType:'نوع موقعیت محله', q7_direction:'جهت جغرافیایی',
-      q8_boundaries_structured:'مرزهای محله', north:'مرز شمالی', south:'مرز جنوبی',
-      east:'مرز شرقی', west:'مرز غربی', q8_boundaries_text:'مرز (متن)',
-      q9_physicalCondition:'وضعیت کالبدی', description:'شرح', percentage:'درصد/تعداد',
-      q10_facilities:'امکانات', mosque:'مسجد', hosseinieh:'حسینیه', school:'مدرسه',
-      clinicOrHealthHouse:'درمانگاه/خانهٔ بهداشت', pharmacy:'داروخانه', sportsFieldOrGym:'زمین/سالن ورزشی',
-      localPark:'پارک محلی', scholarsHouse:'خانهٔ عالم', pipedWaterNetwork:'شبکه آب',
-      streetLighting:'روشنایی معابر', parkLighting:'روشنایی پارک', publicTransport:'حمل‌ونقل عمومی',
-      cityGasNetwork:'گاز شهری', curbs:'جدول‌بندی', streetAsphalt:'آسفالت معابر',
-      policeStation:'پلیس/کلانتری', basijPatrols:'گشت بسیج', sewageSystem:'فاضلاب',
-      wasteCollection:'جمع‌آوری زباله', unusedLand:'اراضی بایر', library:'کتابخانه',
-      cityCameras:'دوربین شهری', charityInstitution:'مؤسسه خیریه', nearbyShoppingCenters:'مراکز خرید نزدیک',
-      counselingCenter:'مرکز مشاوره', karamatHQOffice:'دفتر قرارگاه کرامت',
-      q11_hasCrypts:'وجود گورستان/قبرستان تاریخی', q12_hasMountainsValleys:'وجود ارتفاعات-دره',
-      q13_hasQanatsWells:'وجود قنات/چاه', propertyStatus:'وضعیت ملکی', status:'وضعیت',
-      q14_needyInfo:'اطلاعات نیازمندان', familiesNeedingAidPackages:'خانوار نیازمند بسته معیشتی',
-      familiesNeedingBillPayments:'خانوار نیازمند پرداخت قبوض', familiesWithAddictedHead:'خانوار با سرپرست معتاد',
-      needyPatientsWithSpecialNeeds:'بیماران خاص نیازمند', disabledResidents:'ساکنان معلول',
-      elderlyNeedingAid:'سالمندان نیازمند', male:'مرد', female:'زن',
-      elderlyFemaleHeadedHouseholds:'خانوار سالمندِ زن-سرپرست',
-      nonElderlyFemaleHeadedHouseholdsNoJob:'خانوار زن-سرپرست بدون شغل',
-      totalFemaleHeadedHouseholds:'مجموع خانوارهای زن-سرپرست',
-      q15_securityInfo:'وضعیت امنیتی', feelingOfInsecurity:'احساس ناامنی',
-      worryAboutBurglars:'نگرانی از سرقت', worryAboutMuggingOrStrayDogs:'نگرانی از کیف‌قاپی/سگ‌های ولگرد',
-      streetBrawls:'نزاع خیابانی', worryAboutFamilyVulnerability:'آسیب‌پذیری خانواده',
-      thugsHangout:'پاتوق اوباش', peopleMovingOut:'مهاجرت ساکنان',
-      q16_addictionInfo:'وضعیت اعتیاد', familiesAffectedByAddiction:'خانوار درگیر اعتیاد',
-      nonPublicAddictsInfo:'معتادان غیرمتجاهر', publicAddictsInfo:'معتادان متجاهر',
-      drugDistributorCount:'تعداد توزیع‌کنندگان مواد', alcoholDistributorCount:'تعداد توزیع‌کنندگان الکل',
-      distributionHotspotCount:'نقاط داغ توزیع', rehabCampExists:'کمپ ترک اعتیاد',
-      q17_religiousCulturalInfo:'وضعیت فرهنگی-مذهبی', religiousGroupsCount:'تعداد هیئت/گروه مذهبی',
-      homeBasedReligiousCeremonies:'مراسم خانگی', congregationalPrayersAttendees:'مشارکت در نماز جماعت',
-      residentClericsCount:'روحانیون ساکن', largeScaleCelebrationsMourning:'مراسم بزرگ',
-      activeClericsCount:'روحانی فعال', activeMaddahsCount:'مداح فعال',
-      activeFemaleSessionLeadersCount:'مدیر جلسات خواهران', participationInRalliesElections:'مشارکت در راهپیمایی/انتخابات',
-      martyrsCount:'تعداد شهدا', residentMartyrFamiliesInfo:'خانواده شهدا',
-      veteransCount:'جانبازان', isargaranCount:'ایثارگران', freedPowCount:'آزادگان',
-      hijabObservancePercentage:'رعایت حجاب', socialHarms:'آسیب‌های اجتماعی',
-      harmTitle:'عنوان آسیب', statusOrStats:'وضعیت/آمار', priority:'اولویت',
-      q19_trustedIndividuals:'معتمدان محله', row:'ردیف', name:'نام', job:'شغل',
-      phoneNumber:'تلفن', hasContact:'ارتباط دارد؟', contactFrequency:'تناوب ارتباط',
-      q20_customs:'آداب و رسوم', partA:'بخش A', partB:'بخش B',
-      q21_neighborhoodCapacities:'ظرفیت‌های محله', capacity:'ظرفیت', description:'توضیح',
-      q22_mosques:'مساجد', prayersHeld:'نمازهای برگزارشده', clericInfo:'اطلاعات روحانی',
-      boardChairmanInfo:'هیئت امناء', charityAffiliation:'وابستگی خیریه',
-      culturalCenterAffiliation:'وابستگی کانون', basijBaseAffiliation:'وابستگی پایگاه بسیج',
-      publicTurnout:'حضور مردمی', buildingCondition:'وضع ساختمانی', cooperationWithCouncil:'همکاری با شورا',
-      q23_basijBases:'پایگاه‌های بسیج', gender:'جنسیت', commanderInfo:'فرمانده',
-      commanderPhone:'تلفن فرمانده', isResident:'ساکن است؟', activityLevel:'سطح فعالیت',
-      locatedInMosque:'مستقر در مسجد؟', q24_schools:'مدارس', principalInfo:'مدیر',
-      principalPhone:'تلفن مدیر', students:'دانش‌آموزان', boys:'پسر', girls:'دختر', total:'جمع',
-      studentMaritalStatusGender:'وضعیت تأهل/جنس', address:'آدرس', cooperationLevel:'سطح همکاری',
-      q25_educationalStatus_structured:'وضعیت تحصیلی', studying:'در حال تحصیل',
-      graduated:'فارغ‌التحصیل', q26_culturalCenters_list:'مراکز فرهنگی', manager:'مدیر',
-      mobile:'موبایل', phone:'تلفن', specialty:'تخصص', cooperation:'همکاری',
-      q27_places_list:'اماکن قابل بهره‌برداری', field:'عرصه', usage:'کاربری',
-      q27_capacity_object:'ظرفیت فارغ‌التحصیلان', capacityExists:'ظرفیت موجود',
-      capacityUsage:'نحوه بهره‌برداری', q28_ongoingProjects_list:'پروژه‌های در حال اجرا',
-      q29_unfinishedProjects_list:'پروژه‌های نیمه‌تمام', q30_neededProjects_list:'پروژه‌های موردنیاز',
-      projectName:'نام پروژه', responsibleBody:'مسئول', q31_workgroups:'کارگروه‌ها',
-      workgroupName:'نام کارگروه', responsiblePerson:'مسئول', phoneNumber:'تلفن',
-      hasDecree:'ابلاغ دارد؟', isBasiji:'بسیجی است؟', q32_issues_list_v1:'مسائل/محرومیت‌ها',
-      title:'عنوان', level:'سطح', q33_agreements_list:'تفاهم‌نامه‌ها', organization:'سازمان',
-      field:'حوزه', agreementSubject:'موضوع', q34_analysis_list:'تحلیل محله',
-      strengths:'نقاط قوت', weaknesses:'نقاط ضعف', capacities:'ظرفیت‌ها',
-      implementationSuggestion:'پیشنهاد اجرا', needs:'نیازها', prerequisites:'پیش‌نیازها',
-      q35_centers_list:'مراکز دسترسی', centerName:'نام مرکز', utilization:'میزان بهره‌برداری',
-      q36_points_list:'نقاط چالشی', location:'مکان', challengeType:'نوع چالش',
-      q37_wasteland_list:'زمین‌های بایر', owner:'مالک', harmType:'نوع آسیب',
-      q38_guilds_list:'اصناف/مشاغل', guildType:'نوع صنف', q39_workshops_list:'کارگاه‌های اشتغال',
-      workshopType:'نوع کارگاه', employeeCount:'تعداد شاغل', activityType:'نوع فعالیت',
-      q40_administrativeProblems:'مشکلات اداری/شرح کلی'
-    }; const T = k => dict[k] || k; %>
+    <% /* Persian label dictionary (shortened for brevity – extend as needed) */
+    const dict = {
+        _id: 'شناسه',
+        createdAt: 'تاریخ ایجاد',
+        updatedAt: 'به‌روزرسانی',
+        __v: 'نسخه',
+        sourceQuestionnaireId: 'شناسهٔ منبع',
+        metadata: 'اطلاعات متادیتا',
+        entryDate: 'تاریخ ورود',
+        enteredBy: 'واردکننده',
+        generalInfo: 'اطلاعات کلی',
+        neighborhood: 'محله',
+        basijResistanceBase: 'پایگاه بسیج',
+        city: 'شهر',
+        county: 'شهرستان',
+        province: 'استان',
+        q1_aerialMapProvided: 'نقشهٔ هوایی',
+        q2_neighborhoodDetails: 'جزئیات محله',
+        oldName: 'نام قدیمی',
+        newName: 'نام جدید',
+        detail: 'توضیحات',
+        q3_population_structured: 'جمعیت و آمار',
+        totalPopulation: 'جمعیت کل',
+        residentHouseholds: 'خانوارهای مقیم',
+        iranian: 'ایرانی',
+        foreign: 'اتباع',
+        populationBreakdown: 'ترکیب جمعیت',
+        iranianMen: 'مردان ایرانی',
+        iranianWomen: 'زنان ایرانی',
+        foreignNationals: 'اتباع خارجی',
+        minorities: 'اقلیت‌ها',
+        ageBreakdown: 'تفکیک سنی',
+        group: 'گروه',
+        female: 'زن',
+        male: 'مرد',
+        q4_religion: 'اطلاعات مذهبی',
+        distribution: 'ترکیب مذهبی',
+        religion: 'مذهب',
+        percentage: 'درصد/تعداد',
+        deviantSectsInfo_structured: 'فرقه‌های انحرافی (جزئی)',
+        sectName: 'نام فرقه',
+        secNumber: 'تعداد پیروان',
+        secInfo: 'توضیحات',
+        deviantSectsInfo_text: 'متن فرقه‌های انحرافی',
+        q5_ethnicities_list: 'قومیت‌ها',
+        ethnicity: 'قومیت',
+        householdCount: 'تعداد خانوار',
+        q6_locationType: 'نوع موقعیت محله',
+        q7_direction: 'جهت جغرافیایی',
+        q8_boundaries_structured: 'مرزهای محله',
+        north: 'مرز شمالی',
+        south: 'مرز جنوبی',
+        east: 'مرز شرقی',
+        west: 'مرز غربی',
+        q8_boundaries_text: 'مرز (متن)',
+        q9_physicalCondition: 'وضعیت کالبدی',
+        description: 'شرح',
+        percentage: 'درصد/تعداد',
+        q10_facilities: 'امکانات',
+        mosque: 'مسجد',
+        hosseinieh: 'حسینیه',
+        school: 'مدرسه',
+        clinicOrHealthHouse: 'درمانگاه/خانهٔ بهداشت',
+        pharmacy: 'داروخانه',
+        sportsFieldOrGym: 'زمین/سالن ورزشی',
+        localPark: 'پارک محلی',
+        scholarsHouse: 'خانهٔ عالم',
+        pipedWaterNetwork: 'شبکه آب',
+        streetLighting: 'روشنایی معابر',
+        parkLighting: 'روشنایی پارک',
+        publicTransport: 'حمل‌ونقل عمومی',
+        cityGasNetwork: 'گاز شهری',
+        curbs: 'جدول‌بندی',
+        streetAsphalt: 'آسفالت معابر',
+        policeStation: 'پلیس/کلانتری',
+        basijPatrols: 'گشت بسیج',
+        sewageSystem: 'فاضلاب',
+        wasteCollection: 'جمع‌آوری زباله',
+        unusedLand: 'اراضی بایر',
+        library: 'کتابخانه',
+        cityCameras: 'دوربین شهری',
+        charityInstitution: 'مؤسسه خیریه',
+        nearbyShoppingCenters: 'مراکز خرید نزدیک',
+        counselingCenter: 'مرکز مشاوره',
+        karamatHQOffice: 'دفتر قرارگاه کرامت',
+        q11_hasCrypts: 'احداث غیر قانونی منازل',
+        q12_hasMountainsValleys: 'عدم وجود سند مالکیت منازل',
+        q13_hasQanatsWells: 'وجود جمعیت مهاجر در محله',
+        propertyStatus: 'وضعیت ملکی',
+        status: 'وضعیت',
+        q14_needyInfo: 'اطلاعات نیازمندان',
+        familiesNeedingAidPackages: 'خانوار نیازمند بسته معیشتی',
+        familiesNeedingBillPayments: 'خانوار نیازمند پرداخت قبوض',
+        familiesWithAddictedHead: 'خانوار با سرپرست معتاد',
+        needyPatientsWithSpecialNeeds: 'بیماران خاص نیازمند',
+        disabledResidents: 'ساکنان معلول',
+        elderlyNeedingAid: 'سالمندان نیازمند',
+        male: 'مرد',
+        female: 'زن',
+        elderlyFemaleHeadedHouseholds: 'خانوار سالمندِ زن-سرپرست',
+        nonElderlyFemaleHeadedHouseholdsNoJob: 'خانوار زن-سرپرست بدون شغل',
+        totalFemaleHeadedHouseholds: 'مجموع خانوارهای زن-سرپرست',
+        q15_securityInfo: 'وضعیت امنیتی',
+        feelingOfInsecurity: 'احساس ناامنی',
+        worryAboutBurglars: 'نگرانی از سرقت',
+        worryAboutMuggingOrStrayDogs: 'نگرانی از کیف‌قاپی/سگ‌های ولگرد',
+        streetBrawls: 'نزاع خیابانی',
+        worryAboutFamilyVulnerability: 'آسیب‌پذیری خانواده',
+        thugsHangout: 'پاتوق اوباش',
+        peopleMovingOut: 'مهاجرت ساکنان',
+        q16_addictionInfo: 'وضعیت اعتیاد',
+        familiesAffectedByAddiction: 'خانوار درگیر اعتیاد',
+        nonPublicAddictsInfo: 'معتادان غیرمتجاهر',
+        publicAddictsInfo: 'معتادان متجاهر',
+        drugDistributorCount: 'تعداد توزیع‌کنندگان مواد',
+        alcoholDistributorCount: 'تعداد توزیع‌کنندگان الکل',
+        distributionHotspotCount: 'نقاط داغ توزیع',
+        rehabCampExists: 'کمپ ترک اعتیاد',
+        q17_religiousCulturalInfo: 'وضعیت فرهنگی-مذهبی',
+        religiousGroupsCount: 'تعداد هیئت/گروه مذهبی',
+        homeBasedReligiousCeremonies: 'مراسم خانگی',
+        congregationalPrayersAttendees: 'مشارکت در نماز جماعت',
+        residentClericsCount: 'روحانیون ساکن',
+        largeScaleCelebrationsMourning: 'مراسم بزرگ',
+        activeClericsCount: 'روحانی فعال',
+        activeMaddahsCount: 'مداح فعال',
+        activeFemaleSessionLeadersCount: 'مدیر جلسات خواهران',
+        participationInRalliesElections: 'مشارکت در راهپیمایی/انتخابات',
+        martyrsCount: 'تعداد شهدا',
+        residentMartyrFamiliesInfo: 'خانواده شهدا',
+        veteransCount: 'جانبازان',
+        isargaranCount: 'ایثارگران',
+        freedPowCount: 'آزادگان',
+        hijabObservancePercentage: 'رعایت حجاب',
+        socialHarms: 'آسیب‌های اجتماعی',
+        harmTitle: 'عنوان آسیب',
+        statusOrStats: 'وضعیت/آمار',
+        priority: 'اولویت',
+        q19_trustedIndividuals: 'معتمدان محله',
+        row: 'ردیف',
+        name: 'نام',
+        job: 'شغل',
+        phoneNumber: 'تلفن',
+        hasContact: 'ارتباط دارد؟',
+        contactFrequency: 'تناوب ارتباط',
+        q20_customs: 'آداب و رسوم',
+        partA: 'بخش A',
+        partB: 'بخش B',
+        q21_neighborhoodCapacities: 'ظرفیت‌های محله',
+        capacity: 'ظرفیت',
+        description: 'توضیح',
+        q22_mosques: 'مساجد',
+        prayersHeld: 'نمازهای برگزارشده',
+        clericInfo: 'اطلاعات روحانی',
+        boardChairmanInfo: 'هیئت امناء',
+        charityAffiliation: 'وابستگی خیریه',
+        culturalCenterAffiliation: 'وابستگی کانون',
+        basijBaseAffiliation: 'وابستگی پایگاه بسیج',
+        publicTurnout: 'حضور مردمی',
+        buildingCondition: 'وضع ساختمانی',
+        cooperationWithCouncil: 'همکاری با شورا',
+        q23_basijBases: 'پایگاه‌های بسیج',
+        gender: 'جنسیت',
+        commanderInfo: 'فرمانده',
+        commanderPhone: 'تلفن فرمانده',
+        isResident: 'ساکن است؟',
+        activityLevel: 'سطح فعالیت',
+        locatedInMosque: 'مستقر در مسجد؟',
+        q24_schools: 'مدارس',
+        principalInfo: 'مدیر',
+        principalPhone: 'تلفن مدیر',
+        students: 'دانش‌آموزان',
+        boys: 'پسر',
+        girls: 'دختر',
+        total: 'جمع',
+        studentMaritalStatusGender: 'وضعیت تأهل/جنس',
+        address: 'آدرس',
+        cooperationLevel: 'سطح همکاری',
+        q25_educationalStatus_structured: 'وضعیت تحصیلی',
+        studying: 'در حال تحصیل',
+        graduated: 'فارغ‌التحصیل',
+        q26_culturalCenters_list: 'مراکز فرهنگی',
+        manager: 'مدیر',
+        mobile: 'موبایل',
+        phone: 'تلفن',
+        specialty: 'تخصص',
+        cooperation: 'همکاری',
+        q27_places_list: 'اماکن قابل بهره‌برداری',
+        field: 'عرصه',
+        usage: 'کاربری',
+        q27_capacity_object: 'ظرفیت فارغ‌التحصیلان',
+        capacityExists: 'ظرفیت موجود',
+        capacityUsage: 'نحوه بهره‌برداری',
+        q28_ongoingProjects_list: 'پروژه‌های در حال اجرا',
+        q29_unfinishedProjects_list: 'پروژه‌های نیمه‌تمام',
+        q30_neededProjects_list: 'پروژه‌های موردنیاز',
+        projectName: 'نام پروژه',
+        responsibleBody: 'مسئول',
+        q31_workgroups: 'کارگروه‌ها',
+        workgroupName: 'نام کارگروه',
+        responsiblePerson: 'مسئول',
+        phoneNumber: 'تلفن',
+        hasDecree: 'ابلاغ دارد؟',
+        isBasiji: 'بسیجی است؟',
+        q32_issues_list_v1: 'مسائل/محرومیت‌ها',
+        title: 'عنوان',
+        level: 'سطح',
+        q33_agreements_list: 'تفاهم‌نامه‌ها',
+        organization: 'سازمان',
+        field: 'حوزه',
+        agreementSubject: 'موضوع',
+        q34_analysis_list: 'تحلیل محله',
+        strengths: 'نقاط قوت',
+        weaknesses: 'نقاط ضعف',
+        capacities: 'ظرفیت‌ها',
+        implementationSuggestion: 'پیشنهاد اجرا',
+        needs: 'نیازها',
+        prerequisites: 'پیش‌نیازها',
+        q35_centers_list: 'مراکز دسترسی',
+        centerName: 'نام مرکز',
+        utilization: 'میزان بهره‌برداری',
+        q36_points_list: 'نقاط چالشی',
+        location: 'مکان',
+        challengeType: 'نوع چالش',
+        q37_wasteland_list: 'زمین‌های بایر',
+        owner: 'مالک',
+        harmType: 'نوع آسیب',
+        q38_guilds_list: 'اصناف/مشاغل',
+        guildType: 'نوع صنف',
+        q39_workshops_list: 'کارگاه‌های اشتغال',
+        workshopType: 'نوع کارگاه',
+        employeeCount: 'تعداد شاغل',
+        activityType: 'نوع فعالیت',
+        q40_administrativeProblems: 'مشکلات اداری/شرح کلی',
+        q39_workshops_text: 'کارگاه‌های اشتغال (متن)',
+        briefDescription: 'شرح محله به کمک هوش مصنوعی'
+    };
+    const T = k => dict[k] || k;
+    %>
 
-    <% function renderKV(key, val, level) {
-      const pad = 'lvl-' + level;
-      if (val === null || val === undefined || val === '') {
-        %><tr><td class="<%= pad %>"><% if (icons[key]) { %><i class="<%= icons[key] %> icon-field"></i><% } %><%= T(key) %></td><td>—</td></tr><%
-        return;
-      }
-      if (typeof val === 'string' || typeof val === 'number') {
-        %><tr><td class="<%= pad %>"><% if (icons[key]) { %><i class="<%= icons[key] %> icon-field"></i><% } %><%= T(key) %></td><td><%= val %></td></tr><%
-        return;
-      }
-      if (typeof val === 'boolean') {
-        const badgeClass = val ? 'bg-success' : 'bg-danger';
-        const text = val ? 'بله' : 'خیر';
-        %><tr><td class="<%= pad %>"><% if (icons[key]) { %><i class="<%= icons[key] %> icon-field"></i><% } %><%= T(key) %></td><td><span class="badge <%= badgeClass %>"><%= text %></span></td></tr><%
-        return;
-      }
-      if (Array.isArray(val)) {
-        if (val.length === 0) {
-          %><tr><td class="<%= pad %>"><% if (icons[key]) { %><i class="<%= icons[key] %> icon-field"></i><% } %><%= T(key) %></td><td>خالی</td></tr><%
-          return;
-        }
-        if (val[0] && typeof val[0] === 'object' && !Array.isArray(val[0])) {
-          const keys = Object.keys(val[0]);
-          %><tr><td class="<%= pad %>"><% if (icons[key]) { %><i class="<%= icons[key] %> icon-field"></i><% } %><%= T(key) %></td><td><table class="table table-sm table-bordered nested-table"><thead><tr><%
-          keys.forEach(k => { %><th><%= T(k) %></th><% });
-          %></tr></thead><tbody><%
-          val.forEach(item => { %><tr><%
-            keys.forEach(k => { %><td><%= item[k] || '—' %></td><% });
-          %></tr><% });
-          %></tbody></table></td></tr><%
-        } else {
-          %><tr class="section-row"><td class="<%= pad %>" colspan="2"><% if (icons[key]) { %><i class="<%= icons[key] %> icon-field"></i><% } %>■ <%= T(key) %> (آرایه – <%= val.length %> مورد)</td></tr><%
-          val.forEach((item, idx) => {
-            const itemTitle = `${T(key)} ${idx + 1}`;
-            if (typeof item === 'object' && !Array.isArray(item)) {
-              %><tr class="array-item-title"><td class="<%= pad %>"><%= itemTitle %></td><td></td></tr><%
-              Object.entries(item).forEach(([k, v]) => renderKV(k, v, level + 1));
-            } else {
-              renderKV(itemTitle, item, level + 1);
-            }
-          });
-        }
-        return;
-      }
-      %><tr class="section-row"><td class="<%= pad %>" colspan="2"><% if (icons[key]) { %><i class="<%= icons[key] %> icon-field"></i><% } %>■ <%= T(key) %></td></tr><%
-      Object.entries(val).forEach(([k, v]) => renderKV(k, v, level + 1));
-    } %>
-
-    <% questionnaires.forEach((q, i) => { %>
-      <div class="accordion-item mb-3 shadow-sm rounded-3">
-        <h2 class="accordion-header" id="h<%= i %>">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c<%= i %>">
-            محله: <strong class="px-1"><%= q.generalInfo?.neighborhood || '?' %></strong>
-            — شهر: <%= q.generalInfo?.city || '?' %>
-            — استان: <%= q.generalInfo?.province || '?' %>
-            (ثبت: <%= new Date(q.createdAt).toLocaleDateString('fa-IR') %>)
-          </button>
-        </h2>
-        <div id="c<%= i %>" class="accordion-collapse collapse" data-bs-parent="#accordionQuestionnaires">
-          <div class="accordion-body">
-            <div class="search-container">
-              <i class="fas fa-search"></i>
-              <input type="text" class="form-control table-search" placeholder="جستجو در این پرسشنامه..." id="search-<%= i %>">
-            </div>
-            <div class="table-container">
-              <table id="table-<%= i %>" class="table table-striped table-hover table-bordered datatable w-100">
-                <thead class="table-dark">
-                  <tr><th style="width:35%">کلید</th><th>مقدار</th></tr>
+    <!-- recursive renderer -->
+    <% function renderKV(key, val, level){
+        const pad = 'lvl-' + level;
+        const title = T(key);
+    if(val === null || val === undefined || val === ''){ %>
+        <tr>
+            <td class="<%= pad %>">
+                <% if(icons[key]){ %><i class="<%= icons[key] %> icon-field"></i>
+                <% } %>
+                <%= title %></td>
+            <td>—</td>
+        </tr>
+    <% return; }
+    if(typeof val === 'string' || typeof val === 'number'){ %>
+        <tr>
+            <td class="<%= pad %>">
+                <% if(icons[key]){ %><i class="<%= icons[key] %> icon-field"></i>
+                <% } %>
+                <%= title %></td>
+            <td><%= val %></td>
+        </tr>
+    <% return; }
+    if(typeof val === 'boolean'){ const bClass = val ? 'badge-success' : 'badge-danger'; const txt = val ? 'بله' : 'خیر'; %>
+    <tr>
+        <td class="<%= pad %>">
+            <% if(icons[key]){ %><i class="<%= icons[key] %> icon-field"></i>
+            <% } %>
+            <%= title %></td>
+        <td><span class="badge <%= bClass %>"><%= txt %></span></td>
+    </tr>
+    <% return; }
+    if(Array.isArray(val)){
+    if(val.length === 0){ %>
+        <tr>
+            <td class="<%= pad %>">
+                <% if(icons[key]){ %><i class="<%= icons[key] %> icon-field"></i>
+                <% } %>
+                <%= title %></td>
+            <td>—</td>
+        </tr>
+    <% return; }
+    if(typeof val[0] === 'object' && !Array.isArray(val[0])){
+        const cols = Object.keys(val[0]); %>
+    <tr>
+        <td class="<%= pad %>">
+            <% if(icons[key]){ %><i class="<%= icons[key] %> icon-field"></i>
+            <% } %>
+            <%= title %></td>
+        <td>
+            <table class="table table-sm table-bordered nested-table w-100">
+                <thead>
+                <tr>
+                    <% cols.forEach(c=>{ %>
+                        <th><%= T(c) %></th>
+                    <% }) %>
+                </tr>
                 </thead>
                 <tbody>
-                  <tr><td class="lvl-0">شناسه</td><td><%= q._id %></td></tr>
-                  <% Object.entries(q).forEach(([k, v]) => { if (k !== '_id' && k !== '__v') renderKV(k, v, 0); }); %>
+                <% val.forEach(row=>{ %>
+                    <tr>
+                        <% cols.forEach(c=>{ %>
+                            <td><%= row[c] ?? '—' %></td>
+                        <% }) %>
+                    </tr>
+                <% }) %>
                 </tbody>
-              </table>
+            </table>
+        </td>
+    </tr>
+    <% } else { // array of primitives / mixed
+        val.forEach((item, idx) => renderKV(`${title} ${idx + 1}`, item, level + 1));
+    } return; }
+        // object not array
+    %>
+    <tr class="table-light fw-semibold">
+        <td class="<%= pad %>" colspan="2">
+            <% if(icons[key]){ %><i class="<%= icons[key] %> icon-field"></i>
+            <% } %>
+            ■ <%= title %></td>
+    </tr>
+    <% Object.entries(val).forEach(([k, v]) => renderKV(k, v, level + 1)); %>
+    <% } %>
+
+    <div class="accordion" id="questionnairesAccordion">
+        <% questionnaires.forEach((q, i)=>{ %>
+            <div class="accordion-item mb-3 shadow rounded-3">
+                <h2 class="accordion-header" id="h<%= i %>">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#c<%= i %>">
+                        <i class="fas fa-map-marker-alt me-2 text-warning"></i>
+                        محله <strong class="px-1"><%= q?.generalInfo?.neighborhood || 'نامشخص' %></strong>
+                        – <%= q?.generalInfo?.city || '---' %> / <%= q?.generalInfo?.province || '---' %>
+                        <span class="ms-auto small text-white-50">ثبت: <%= new Date(q.createdAt).toLocaleDateString('fa-IR') %></span>
+                    </button>
+                </h2>
+                <div id="c<%= i %>" class="accordion-collapse collapse" data-bs-parent="#questionnairesAccordion">
+                    <div class="accordion-body">
+                        <div class="row g-4">
+                            <div class="col-12 col-md-3">
+                                <div class="list-group sticky-nav">
+                                    <% Object.keys(q).forEach(k=>{ %>
+                                        <a class="list-group-item list-group-item-action"
+                                           href="#sec-<%= i %>-<%= k %>"><%= T(k) %></a>
+                                    <% }) %>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <% Object.entries(q).forEach(([k, v])=>{ %>
+                                    <section id="sec-<%= i %>-<%= k %>" class="mb-5">
+                                        <h6 class="section-title"><i
+                                                    class="<%= icons[k] || 'fas fa-folder-open' %> me-1"></i><%= T(k) %>
+                                        </h6>
+                                        <div class="table-responsive">
+                                            <table class="table table-sm table-striped table-hover table-bordered w-100">
+                                                <tbody>
+                                                <% renderKV(k, v, 0); %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </section>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    <% }) %>
-  </div>
+        <% }) %>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -396,20 +537,20 @@
 <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
 
 <script>
-$(function() {
-  $('.datatable').each(function(index) {
-    const table = $(this).DataTable({
-      paging: false,
-      info: false,
-      language: { search: 'جستجو:', zeroRecords: 'هیچ موردی یافت نشد' },
-      ordering: true,
-      responsive: true,
-      columnDefs: [{ orderable: false, targets: [0] }]
+    // activate DataTables for nested tables
+    $(function () {
+        $('table.nested-table').each(function () {
+            $(this).DataTable({
+                paging: false,
+                info: false,
+                searching: false,
+                ordering: true,
+                responsive: true,
+                language: {zeroRecords: 'هیچ موردی یافت نشد'},
+                columnDefs: [{orderable: false, targets: [0]}]
+            });
+        });
     });
-    $('#search-' + index).on('keyup', function() { table.search(this.value).draw(); });
-  });
-
-});
 </script>
 </body>
 </html>
