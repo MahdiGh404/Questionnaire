@@ -4,6 +4,6 @@ const KhaniRoute = require('./KhaniRoute')
 
 
 router.use('/Error', ErrorRoute)
-router.use('/Khani', KhaniRoute)
+router.use('/Questionnaire', KhaniRoute)
 
 module.exports = router;
